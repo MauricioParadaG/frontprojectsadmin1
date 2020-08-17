@@ -1,9 +1,9 @@
 :root {
-  --blanco: #ffffff;
-  --gris1: #edf2f6;
-  --gris2: #2f3848;
-  --gris3: #1a202d;
-  --negro: #000000;
+  --white: #ffffff;
+  --gray1: #edf2f6;
+  --gray2: #2f3848;
+  --gray3: #1a202d;
+  --black: #000000;
   --headingFont:'Raleway', sans-serif;
   --textFont:  'Roboto', sans-serif;
 }
@@ -17,7 +17,7 @@ html {
 }
 body {
   min-height: 100%;
-  background-color: var(--gris1);
+  background-color: var(--gray1);
   font-size: 16px; 
   font-size: 1.6rem;
   font-family: var(--textFont);
@@ -29,7 +29,7 @@ h1, h2 {
   font-weight: 900;
   margin: 0 0 4rem 0;
   text-align: center;
-  color: var(--gris2);
+  color: var(--gray2);
 }
 h1 span {
   font-weight: 400;
@@ -47,7 +47,7 @@ ul {
 }
 a {
   text-decoration: none;
-  color: var(--gris2);
+  color: var(--gray2);
 }
 
 /** BUTTONS **/
@@ -65,21 +65,21 @@ a {
   cursor: pointer;
 }
 .btn-primary {
-  background-color: var(--gris2);
-  color: var(--blanco);
+  background-color: var(--gray2);
+  color: var(--white);
 }
 .btn-primary:hover {
-  background: var(--gris3);
+  background: var(--gray3);
 }
 .btn-secondary {
-  background-color: var(--gris1);
+  background-color: var(--gray1);
 }
 .btn-block {
   display: block;
   width: 100%;
 }
 .btn-submit:hover {
-  background-color: var(--gris2);
+  background-color: var(--gray2);
 }
 .btn-blank {
   margin: 0;
@@ -95,7 +95,7 @@ a {
   }
 
   aside {
-      background-color: var(--blanco);
+      background-color: var(--white);
       flex: 0 0 300px;
   }
   .section-main {
@@ -114,12 +114,12 @@ aside  {
   margin-top: 6rem;
 }
 .form-new-project .input-text {
-  border-bottom: 1px solid var(--gris2);
+  border-bottom: 1px solid var(--gray2);
   border-radius: 0;
-  background-color: var(--gris1);
+  background-color: var(--gray1);
 }
 .form-new-project .input-text::placeholder{
-  color: var(--gris2);
+  color: var(--gray2);
 }
 .projects {
   margin-top: 10rem;
@@ -129,18 +129,18 @@ aside  {
 }
 .listed-projects li a {
   font-size: 1.4rem;
-  color: var(--gris2);
+  color: var(--gray2);
   line-height: 1.5;
   font-weight: 300;
 }
 .app-header {
   display: flex;
   justify-content: space-between;
-  background-color: var(--gris2);
+  background-color: var(--gray2);
   padding: 4rem;
 }
 .user-name {
-  color: var(--blanco);
+  color: var(--white);
   font-size: 2.2rem;
   margin: 0;
 }
@@ -148,7 +148,7 @@ aside  {
   font-weight: 900;
 }
 .nav-main a {
-  color: var(--blanco);
+  color: var(--white);
   text-decoration: none;
 }
 .nav-main a:first-of-type {
@@ -157,7 +157,7 @@ aside  {
 
 /** Form create and edit tasks **/
 .formular {
-  background-color: var(--gris3);
+  background-color: var(--gray3);
   padding: 4rem;
 }
 .formular form {
@@ -169,7 +169,7 @@ aside  {
 }
 .container-input label {
   margin-bottom: 1rem;
-  color: var(--blanco);
+  color: var(--white);
 }
 .input-text {
   padding: 1rem;
@@ -194,7 +194,7 @@ aside  {
 .task {
   display: flex;
   justify-content: space-between;
-  background-color: var(--blanco);
+  background-color: var(--white);
   padding: .5rem 2rem;
   align-items: center;
   margin-bottom: 1rem;
@@ -250,17 +250,17 @@ aside  {
 .complete,
 .correct {
   background-color: rgba(154, 252, 154, .3);
-  color: var(--gris3);
+  color: var(--gray3);
 }
 .incomplete{
   background-color: rgba(255, 178, 178, .4);
-  color: var(--gris3);
+  color: var(--gray3);
 }
 .error {
   max-width: 600px;
   margin: 2rem auto 0 auto;
   background-color: rgb(170, 0, 0);
-  color: var(--blanco);
+  color: var(--white);
 }
 
 
@@ -285,7 +285,7 @@ aside  {
 }
 
 .form-user {
-    background-color: var(--gris2);
+    background-color: var(--gray2);
     height: 100vh;
     min-height: 800px;
     display: flex;
@@ -297,7 +297,7 @@ aside  {
     padding: 5rem 3rem;
     max-width: 500px;
     width: 95%;
-    background-color: var(--blanco);
+    background-color: var(--white);
     border-radius: 1rem;
 }
 
@@ -325,4 +325,36 @@ aside  {
   margin-top: 2rem;
   display: block;
   opacity: .7;
+}
+
+.alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1rem 3rem;
+  border-radius: 1rem;
+  font-family: var(--headingFont);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 2.2rem;
+  text-align: center;
+  width: 100%;
+}
+
+@media (min-width:768px) {
+  .alert {
+      width: auto;
+      top: 30px;
+      right: 10px;
+      left: auto;
+  }
+}
+
+.alert-ok {
+  background-color: rgb(109, 211, 109);
+  color: rgb(2, 103, 2);
+}
+.alert-error {
+  background-color: rgb(230, 78, 78);
+  color: var(--white);
 }

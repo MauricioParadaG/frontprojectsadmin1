@@ -15,7 +15,7 @@ const AlertState = props => {
         dispatch({
             type: SHOW_ALERT,
             payload: {
-                msg: msg, 
+                msg, 
                 category
             }
         });

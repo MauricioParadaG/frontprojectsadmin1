@@ -7,10 +7,7 @@ import clientAxios from '../../config/axios';
 
 import {SIGNUP_SUCCESSFULL, SIGNUP_ERROR, GET_USER, LOGIN_SUCCESSFULL, LOGIN_ERROR, LOGOUT_SESSION} from '../../types/index';
 
-
 const AuthState = props => {
-
-
 
     const initialState = {
     
@@ -23,28 +20,32 @@ const AuthState = props => {
     // Dispatch
     const [state, dispatch] = useReducer(AuthReducer, initialState);
 
-    // functions - Login, signup, more
-
+    // functions - Login, signup, logout,
     // Signup 
     const signupUser = async signupFormData =>{
         try {
-            const formAnswer = await clientAxios.post('/api/users', signupFormData);
-            console.log(formAnswer);
+            const apiAnswerofForm = await clientAxios.post('/api/users', signupFormData);
+            console.log(apiAnswerofForm);
 
             dispatch({
                 type: SIGNUP_SUCCESSFULL,
-                payload: formAnswer.data
+                payload: apiAnswerofForm.data
             })
         } catch (error) {
             console.log(error.response.data.msg);
+            // define error msg to reducer
+            const alert = {
+                msg: error.response.data.msg,
+                category: 'alert-error'
+            }
+
             dispatch({
                 type: SIGNUP_ERROR,
+                payload: alert
             })
         }
 
     }
-
-
 
     return (
         <AuthContext.Provider

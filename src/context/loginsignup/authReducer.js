@@ -8,7 +8,7 @@ export default (state, action) => {
             return {
                 ...state,
                 authenticate: true,
-                message: null,
+                message: null
             }
 
         case SIGNUP_ERROR:

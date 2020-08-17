@@ -1,12 +1,19 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+
+import AlertContext from '../../context/alerts/alertContext';
 import AuthContext from '../../context/loginsignup/authContext';
 
 import { useForm } from 'react-hook-form';
 
-const NewAccountComponent = () => {
+const NewAccountComponent = props=> {
+
+    const alertContext = useContext(AlertContext);
+    const {alert, showAlert} = alertContext;
 
     const authContext = useContext(AuthContext);
+    const {message, authenticate, signupUser} = authContext;
+
     const { register, handleSubmit, errors } = useForm();
 
     const [createAccountForm, setCreateAccountFormState] = useState(
@@ -17,6 +24,16 @@ const NewAccountComponent = () => {
            confirm:''
         }
       );
+
+    useEffect(() => {
+        if (authenticate){
+            props.history.push('/projects');
+        }
+        if (message){
+            showAlert(message.msg, message.category);
+        }
+        
+    }, [message, authenticate, props.history]);
 
       /*
     const onChangeAccount = event => {
@@ -33,10 +50,16 @@ const NewAccountComponent = () => {
     const onSubmit = data => {
         console.log(data);
       
-        // Validation ??
-
+        // Validation - just an alert test - not working with react-hook-form
+        /*
+        if (createAccountForm.name.trim() === ''){
+            showAlert('all fields are required', 'alert-error');
+            return;
+        }
+        */
         // register a user function from Context
-        authContext.signupUser(createAccountForm);
+        //authContext.signupUser(createAccountForm);
+        signupUser(data);
       }
 
       /*
@@ -45,12 +68,12 @@ const NewAccountComponent = () => {
 
         // Validation
         // register a user function from Context
-        authContext.signupUser(createAccountForm);
     }
     */
 
     return (
     <div className="form-user">
+        { alert ? ( <div className={`alert ${alert.category}`}> {alert.msg} </div> )  : null }
         <div className="container-form shadow-dark">
             <h1>Create New Account</h1>
 
@@ -68,6 +91,8 @@ const NewAccountComponent = () => {
                     />
               {errors.name?.type === 'required' && <span>Nombre obligatorio.</span>
               }
+
+
                 </div>
 
                 <div className="field-form">
@@ -94,7 +119,7 @@ const NewAccountComponent = () => {
                     <input type="password"
                     id="password"
                     name="password"
-                    placeholder="*******"ç
+                    placeholder="*******"
                     ref={register({ required: true, minLength: 6 })}
                     //value={createAccountForm.password}
                     //onChange={onChangeAccount}
