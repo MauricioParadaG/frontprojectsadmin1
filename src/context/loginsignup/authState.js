@@ -44,7 +44,24 @@ const AuthState = props => {
                 payload: alert
             })
         }
+    }
 
+    // Getting the authenticate user
+    const authenticateUser = async () =>{
+        const token = localStorage.getItem('token');
+        if(token){
+            // Function that send a token in a Header
+        }
+        try {
+            const apiAnsweraUser = await clientAxios.get('/api/auth');
+            
+        } catch (error) {
+            //console.log(error);
+            dispatch({
+                type: LOGIN_ERROR
+            })
+
+        }
     }
 
     return (
