@@ -7,6 +7,8 @@ import clientAxios from '../../config/axios';
 
 import {SIGNUP_SUCCESSFULL, SIGNUP_ERROR, GET_USER, LOGIN_SUCCESSFULL, LOGIN_ERROR, LOGOUT_SESSION} from '../../types/index';
 
+import tokenAuth from '../../config/token';
+
 const AuthState = props => {
 
     const initialState = {
@@ -30,7 +32,10 @@ const AuthState = props => {
             dispatch({
                 type: SIGNUP_SUCCESSFULL,
                 payload: apiAnswerofForm.data
-            })
+            });
+
+            // get user from function in authState.js
+            authenticateUser();
         } catch (error) {
             console.log(error.response.data.msg);
             // define error msg to reducer
@@ -51,12 +56,14 @@ const AuthState = props => {
         const token = localStorage.getItem('token');
         if(token){
             // Function that send a token in a Header
+            tokenAuth(token);
         }
         try {
             const apiAnsweraUser = await clientAxios.get('/api/auth');
+            console.log(apiAnsweraUser);
             
         } catch (error) {
-            //console.log(error);
+            console.log(error.response);
             dispatch({
                 type: LOGIN_ERROR
             })
