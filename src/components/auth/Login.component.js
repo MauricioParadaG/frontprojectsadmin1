@@ -1,15 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-// 
-const LoginComponent = () => {
+
+import AlertContext from '../../context/alerts/alertContext';
+import AuthContext from '../../context/loginsignup/authContext';
+
+import { useForm } from 'react-hook-form';
+
+const LoginComponent = props => {
+
+    const alertContext = useContext(AlertContext);
+    const {alert, showAlert} = alertContext;
+
+    const authContext = useContext(AuthContext);
+    const {message, authenticate, loginUser} = authContext;
+
+    const { register, handleSubmit, errors } = useForm();
 
     const [loginFormData, setLoginFormDataState] = useState(
         {
            email:'',
            password:''
         }
-      );
+    );
 
+    useEffect(() => {
+        if (authenticate){
+            props.history.push('/projects');
+        }
+        if (message){
+            showAlert(message.msg, message.category);
+        }
+        
+    }, [message, authenticate, props.history]);
+
+/*
     const onChangeLogin = event => {
         setLoginFormDataState({
             ...loginFormData,
@@ -19,27 +43,38 @@ const LoginComponent = () => {
             [event.target.name]: event.target.value
         });
     }  
+*/
 
-    const onSubmit = event => {
-        event.preventDefault();
+    const onSubmit = data => {
+        console.log(data);
+
+        loginUser(data);
     }
-
 
     return (
         <div className="form-user">
+        { alert ? ( <div className={`alert ${alert.category}`}> {alert.msg} </div> )  : null }
+
             <div className="container-form shadow-dark">
                 <h1>Login </h1>
 
-                <form onSubmit={onSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    
                     <div className="field-form">
                         <label htmlFor="email">Email</label>
                         <input type="email"
                         id="email"
                         name="email"
                         placeholder="Email"
-                        value={loginFormData.email}
-                        onChange={onChangeLogin}
+                        ref={register({ 
+                            required: true,
+                            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+                          })}
                         />
+              {errors.email?.type === 'required' && <span>Debes indicar un correo electrónico.</span>
+              }
+              {errors.email?.type === 'pattern' && <span>Debes indicar un correo electrónico válido.</span>
+              }
                     </div>
 
                     <div className="field-form">
@@ -48,9 +83,13 @@ const LoginComponent = () => {
                         id="password"
                         name="password"
                         placeholder="*******"
-                        value={loginFormData.password}
-                        onChange={onChangeLogin}
+                        ref={register({ required: true, minLength: 6 })}
                         />
+              {errors.password?.type === 'required' && <span>Contraseña obligatoria.</span>
+              }
+
+              {errors.password?.type === 'minLength' && <span>Tu contraseña debe tener al menos 8 caracteres. Inténtalo de nuevo.</span>
+              }
                     </div>
 
                     {/** Button */}

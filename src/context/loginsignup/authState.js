@@ -51,18 +51,26 @@ const AuthState = props => {
         }
     }
 
+
     // Getting the authenticate user
     const authenticateUser = async () =>{
         const token = localStorage.getItem('token');
         if(token){
             // Function that send a token in a Header
             tokenAuth(token);
+            //console.log("paso por aqui? envia token a header");
         }
         try {
             const apiAnsweraUser = await clientAxios.get('/api/auth');
-            console.log(apiAnsweraUser);
+          //  console.log("paso por aqui? auth bien");
+            dispatch({
+                type: GET_USER,
+                payload: apiAnsweraUser.data.user
+            })
+            //console.log(apiAnsweraUser);
             
         } catch (error) {
+          //  console.log("paso por aqui? auth token al carrer");
             console.log(error.response);
             dispatch({
                 type: LOGIN_ERROR
@@ -71,6 +79,42 @@ const AuthState = props => {
         }
     }
 
+    const loginUser = async loginFormData =>{
+        try {
+            const apiAnswerofForm = await clientAxios.post('/api/auth', loginFormData);
+          //  console.log("paso por aqui? login bien");
+            console.log(apiAnswerofForm);
+
+            dispatch({
+                type: LOGIN_SUCCESSFULL,
+                payload: apiAnswerofForm.data
+            });
+
+            // get user from function in authState.js
+            authenticateUser();
+        } catch (error) {
+            console.log(error.response.data.msg);
+         //   console.log("paso por aqui? token login al carrer");
+            // define error msg to reducer
+            const alert = {
+                msg: error.response.data.msg,
+                category: 'alert-error'
+            }
+
+            dispatch({
+                type: LOGIN_ERROR,
+                payload: alert
+            })
+        }
+    }
+
+    const logoutUser = () =>{
+        dispatch({
+            type: LOGOUT_SESSION
+        })
+    }
+
+
     return (
         <AuthContext.Provider
         value={{
@@ -78,8 +122,10 @@ const AuthState = props => {
             authenticate: state.authenticate,
             user: state.user,
             message: state.message,
-            signupUser
-
+            signupUser,
+            loginUser,
+            authenticateUser,
+            logoutUser
           }}
         >
             {props.children}

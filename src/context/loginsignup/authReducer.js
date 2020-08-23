@@ -11,11 +11,30 @@ export default (state, action) => {
                 message: null
             }
 
+            
+        case LOGIN_SUCCESSFULL:
+            localStorage.setItem('token', action.payload.token);
+            return {
+                ...state,
+                authenticate: true,
+                message: null
+            }
+
+
+        case GET_USER:
+            return {
+                ...state,
+                authenticate: true,
+                user: action.payload
+            }
+
         case SIGNUP_ERROR:
             localStorage.removeItem('token');
             return {
                 ...state,
                 token: null,
+                authenticate: false,
+                user:null,
                 message: action.payload,
             }
 
@@ -24,6 +43,18 @@ export default (state, action) => {
             return {
                 ...state,
                 token: null,
+                authenticate: false,
+                user:null,
+                message: action.payload,
+            }
+
+        case LOGOUT_SESSION:
+            localStorage.removeItem('token');
+            return {
+                ...state,
+                token: null,
+                authenticate: false,
+                user:null,
                 message: action.payload,
             }
 
