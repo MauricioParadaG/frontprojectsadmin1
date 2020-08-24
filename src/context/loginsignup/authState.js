@@ -16,7 +16,8 @@ const AuthState = props => {
         token: localStorage.getItem('token'), 
         authenticate: null,
         user:null,
-        message: null
+        message: null,
+        loadingHOC: true
     }
 
     // Dispatch
@@ -122,6 +123,7 @@ const AuthState = props => {
             authenticate: state.authenticate,
             user: state.user,
             message: state.message,
+            loadingHOC: state.loadingHOC,
             signupUser,
             loginUser,
             authenticateUser,

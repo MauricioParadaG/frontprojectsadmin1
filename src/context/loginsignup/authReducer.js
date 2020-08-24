@@ -8,7 +8,8 @@ export default (state, action) => {
             return {
                 ...state,
                 authenticate: true,
-                message: null
+                message: null,
+                loadingHOC: false
             }
 
             
@@ -17,7 +18,8 @@ export default (state, action) => {
             return {
                 ...state,
                 authenticate: true,
-                message: null
+                message: null,
+                loadingHOC: false
             }
 
 
@@ -25,7 +27,8 @@ export default (state, action) => {
             return {
                 ...state,
                 authenticate: true,
-                user: action.payload
+                user: action.payload,
+                loadingHOC: false
             }
 
         case SIGNUP_ERROR:
@@ -33,9 +36,10 @@ export default (state, action) => {
             return {
                 ...state,
                 token: null,
-                authenticate: false,
+                authenticate: null,
                 user:null,
                 message: action.payload,
+                loadingHOC: false
             }
 
         case LOGIN_ERROR:
@@ -43,9 +47,10 @@ export default (state, action) => {
             return {
                 ...state,
                 token: null,
-                authenticate: false,
+                authenticate: null,
                 user:null,
                 message: action.payload,
+                loadingHOC: false
             }
 
         case LOGOUT_SESSION:
@@ -53,9 +58,10 @@ export default (state, action) => {
             return {
                 ...state,
                 token: null,
-                authenticate: false,
+                authenticate: null,
                 user:null,
                 message: action.payload,
+                loadingHOC: false
             }
 
         default: 

@@ -12,6 +12,7 @@ import AuthState from './context/loginsignup/authState';
 import AlertState from './context/alerts/alertState';
 
 import tokenAuth from './config/token';
+import PrivateRoute from './components/routesFront/PrivateRoute';
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
 
             <Route exact path="/" component={LoginComponent}/>
             <Route exact path="/new-account" component={NewAccountComponent}/>
-            <Route exact path="/projects" component={ProjectsComponent}/>
+            <PrivateRoute exact path="/projects" component={ProjectsComponent}/>
             
           </Switch>
         </Router>

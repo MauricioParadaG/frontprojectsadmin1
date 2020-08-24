@@ -11,12 +11,14 @@ const ProjectsComponent = () => {
 
     // getting the authentication information of a user
     const authContext = useContext(AuthContext);
-    const { authenticateUser } = authContext;
+    const { user, authenticateUser } = authContext;
 
     useEffect(() => {
         authenticateUser();
         // eslint-disable-next-line
-    }, [])
+    }, []);
+
+    if(!user) return null;
 
     return (
         <div className="container-app">
