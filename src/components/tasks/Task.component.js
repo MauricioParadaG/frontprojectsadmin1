@@ -8,7 +8,7 @@ const TaskComponent = props => {
     const tasksContext = useContext(taskContext);
 
     const onClickDelete = () => {
-        tasksContext.setDeleteTask(props.newTasksState.id);
+        tasksContext.setDeleteTask(props.newTasksState._id);
         tasksContext.setNewTasksState(props.newTasksState.projectId);
     }
 

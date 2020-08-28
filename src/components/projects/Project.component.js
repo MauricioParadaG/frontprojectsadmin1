@@ -9,9 +9,9 @@ const ProjectComponent = props => {
     const tasksContext = useContext(taskContext);
 
     const onClick = () => {
-        projectsContext.setselectedProjectState(props.newProjectsState.id);
+        projectsContext.setselectedProjectState(props.newProjectsState._id);
 
-        tasksContext.setNewTasksState(props.newProjectsState.id);
+        tasksContext.setNewTasksState(props.newProjectsState._id);
     }
 
     return (

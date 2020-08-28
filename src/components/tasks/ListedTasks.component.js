@@ -24,7 +24,7 @@ const ListedTasksComponent = () => {
 */
 
     const onClick = () => {
-        projectsContext.setDeleteProjectState(actualProject.id)
+        projectsContext.setDeleteProjectState(actualProject._id);
     }
 
     return (
@@ -39,7 +39,7 @@ const ListedTasksComponent = () => {
             <TransitionGroup>
             {tasksContext.taskProjectDataState.map(task =>(
                 <CSSTransition
-                key={task.id}
+                key={task._id}
                 timeout={200}
                 classNames="task">
                     <TaskComponent
