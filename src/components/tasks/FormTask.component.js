@@ -50,8 +50,8 @@ const FormTaskComponent = () => {
         // Checking if is editing or adding new task
         if(tasksContext.selectedTaskState === null){
             // adding some fields to the newTasks state
-            newTask.completed = false;
-            newTask.projectId = actualProject.id;
+            //newTask.completed = false;
+            newTask.project = actualProject._id;
 
             tasksContext.setAddTaskToList(newTask);
         } 
@@ -59,7 +59,7 @@ const FormTaskComponent = () => {
 
 
         // Sending the new task to the Listed Tasks
-        tasksContext.setNewTasksState(actualProject.id);
+        tasksContext.setNewTasksState(actualProject._id);
 
         setNewTaskState({
             name:''

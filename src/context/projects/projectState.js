@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 //import {v4 as uuid} from "uuid";
 
 import projectContext from './projectContext';
@@ -65,7 +65,7 @@ const ProjectState = props => {
          //   console.log("paso por aqui? token login al carrer");
             // define error msg to reducer
             const alert = {
-                msg: 'There was an error while deleting a project',
+                msg: 'There was an error while getting the list of projects',
                 category: 'alert-error'
             }
 

@@ -5,18 +5,19 @@ import taskContext from './taskContext';
 import TaskReducer from './taskReducer';
 import {GET_TASKSBYID, ADDNEWTASK_TOLIST, FORM_VALIDATION, DELETE_TASK, COMPLETE_TASK, ONGOING_TASK, UPDATE_TASK} from '../../types/index';
 
-// Simulando datos que llegan de 
-
-
-/////////////////////////////////
+import clientAxios from '../../config/axios';
 
 const TaskState = props => {
 
+    /* Old simulator for data from database
     const newTasks = [
         
     ];
+    */
 
     const initialState = {
+    /*
+        // Simulating that comming form a database
         newTasks : [
         {id: 1, name: 'Task 1', completed: true, projectId: 1},
         {id: 2, name: 'Task 2', completed: false, projectId: 2},
@@ -25,9 +26,10 @@ const TaskState = props => {
         {id: 5, name: 'Task 5', completed: true, projectId: 1},
         {id: 6, name: 'Task 6', completed: false, projectId: 2}
     ],
+    */
         //form : false,
         formError: false,
-        taskProjectData: null,
+        taskProjectData: [],
         taskSelected: null
     }
 
@@ -42,6 +44,7 @@ const TaskState = props => {
         })
     };
 
+    /*
     // Put newTasks into the list
     const setAddTaskToList = newTask =>{
         //newProject.id = uuid();
@@ -50,6 +53,25 @@ const TaskState = props => {
             type: ADDNEWTASK_TOLIST,
             payload: newTask
         })
+    }
+    */
+
+        // Put newTasks into the list
+    const setAddTaskToList = async newTask =>{
+        //console.log(newTask);
+        try {
+            const apiAnswerofForm = await clientAxios.post('/api/tasks', newTask);
+            console.log(apiAnswerofForm);
+            
+        // Insert to newTasks State
+        dispatch({
+            type: ADDNEWTASK_TOLIST,
+            payload: apiAnswerofForm.data.task
+        })
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // Errors while trying to add a newTask
@@ -107,7 +129,7 @@ const TaskState = props => {
     return (
         <taskContext.Provider
         value={{
-            newTasksState: state.newTasks,
+            //newTasksState: state.newTasks,
             taskProjectDataState: state.taskProjectData,
             formErrorState: state.formError,
             selectedTaskState: state.taskSelected,
