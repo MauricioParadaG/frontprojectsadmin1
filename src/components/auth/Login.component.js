@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useContext, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
 import AlertContext from '../../context/alerts/alertContext';
@@ -15,14 +15,14 @@ const LoginComponent = props => {
     const {message, authenticate, loginUser} = authContext;
 
     const { register, handleSubmit, errors } = useForm();
-
+/*
     const [loginFormData, setLoginFormDataState] = useState(
         {
            email:'',
            password:''
         }
     );
-
+*/
     useEffect(() => {
         if (authenticate){
             props.history.push('/projects');
@@ -30,7 +30,7 @@ const LoginComponent = props => {
         if (message){
             showAlert(message.msg, message.category);
         }
-        
+        // eslint-disable-next-line
     }, [message, authenticate, props.history]);
 
 /*
@@ -46,7 +46,7 @@ const LoginComponent = props => {
 */
 
     const onSubmit = data => {
-        console.log(data);
+        //console.log(data);
 
         loginUser(data);
     }

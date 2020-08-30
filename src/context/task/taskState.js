@@ -3,7 +3,7 @@ import React, { useReducer } from 'react';
 
 import taskContext from './taskContext';
 import TaskReducer from './taskReducer';
-import {GET_TASKSBYID, ADDNEWTASK_TOLIST, FORM_VALIDATION, DELETE_TASK, COMPLETE_TASK, ONGOING_TASK, UPDATE_TASK} from '../../types/index';
+import {GET_TASKSBYID, ADDNEWTASK_TOLIST, FORM_VALIDATION, DELETE_TASK, ONGOING_TASK, UPDATE_TASK} from '../../types/index';
 
 import clientAxios from '../../config/axios';
 
@@ -36,6 +36,7 @@ const TaskState = props => {
     // Dispatch
     const [state, dispatch] = useReducer(TaskReducer, initialState);
 
+    /*
     // Get tasks by projectId from outside
     const setNewTasksState = projectId =>{
         dispatch({
@@ -43,6 +44,23 @@ const TaskState = props => {
             payload: projectId
         })
     };
+    */
+    // Get tasks by projectId from outside
+    const setNewTasksState = async project =>{
+        //console.log(project);
+        try {
+            const apiAnswerofForm = await clientAxios.get('/api/tasks', {params: {project}});
+            //console.log(apiAnswerofForm);
+        dispatch({
+            type: GET_TASKSBYID,
+            payload: apiAnswerofForm.data.tasks
+        })
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 
     /*
     // Put newTasks into the list
@@ -72,29 +90,52 @@ const TaskState = props => {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     // Errors while trying to add a newTask
     const setShowErrorFormState = () =>{
         dispatch({
             type: FORM_VALIDATION
         })
-    }
+    };
 
     
-    const setDeleteTask = newTaskId =>{
+    const setDeleteTask = async (newTaskId, project) =>{
+        try {
+            await clientAxios.delete(`/api/tasks/${newTaskId}`, {params: {project}});
         dispatch({
             type: DELETE_TASK,
             payload: newTaskId
         })
-    }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    /*
     // Change the complete from true to false 
     const setCompleteTask = newTask =>{
         dispatch({
             type: COMPLETE_TASK,
             payload: newTask
         })
-    }
+    };
+    */
+    // Update a task that after been edited
+    const setUpdateTask = async newTask =>{
+        //console.log(newTask);
+        try {
+            const apiAnswerofForm = await clientAxios.put(`/api/tasks/${newTask._id}`, newTask);
+            console.log(apiAnswerofForm);
+
+        dispatch({
+            type: UPDATE_TASK,
+            payload: apiAnswerofForm.data.task
+        })
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     // Get a task that is going to be edited
     const getOngoingTask = newTask =>{
@@ -102,30 +143,9 @@ const TaskState = props => {
             type: ONGOING_TASK,
             payload: newTask
         })
-    }
+    };
     
-    // Update a task that after been edited
-    const setUpdateTask = newTask =>{
-        dispatch({
-            type: UPDATE_TASK,
-            payload: newTask
-        })
-    }
-
-
-/*
-    // Put newTasks into the list
-    const setAddToListState = newProject =>{
-        newProject.id = uuid();
-        // Insert to newTasks State
-        dispatch({
-            type: ADDNEWPROJECT_TOLIST,
-            payload: newProject
-        })
-    }
-*/
-
-
+    
     return (
         <taskContext.Provider
         value={{
@@ -137,7 +157,7 @@ const TaskState = props => {
             setAddTaskToList,
             setShowErrorFormState,
             setDeleteTask,
-            setCompleteTask,
+            //setCompleteTask, Joining this with setUpdateTask
             getOngoingTask,
             setUpdateTask
           }}

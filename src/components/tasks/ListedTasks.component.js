@@ -43,6 +43,7 @@ const ListedTasksComponent = () => {
                 timeout={200}
                 classNames="task">
                     <TaskComponent
+                    //key={task._id}
                     newTasksState={task}
                     />
                 </CSSTransition>

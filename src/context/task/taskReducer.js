@@ -1,11 +1,12 @@
-import {GET_TASKSBYID, ADDNEWTASK_TOLIST, FORM_VALIDATION, DELETE_TASK, COMPLETE_TASK, ONGOING_TASK, UPDATE_TASK} from '../../types/index';
+import {GET_TASKSBYID, ADDNEWTASK_TOLIST, FORM_VALIDATION, DELETE_TASK, ONGOING_TASK, UPDATE_TASK} from '../../types/index';
 
 export default (state, action) => {
     switch (action.type){            
         case GET_TASKSBYID:
             return {
                 ...state,
-                taskProjectData: state.taskProjectData.filter(newTask => newTask.projectId === action.payload)
+                taskProjectData: action.payload
+                //taskProjectData: state.taskProjectData.filter(newTask => newTask.projectId === action.payload)
             }
 
         case ADDNEWTASK_TOLIST:
@@ -24,10 +25,20 @@ export default (state, action) => {
         case DELETE_TASK:
             return {
                 ...state,
-                taskProjectData: state.taskProjectData.filter(deleteTask => deleteTask.id !== action.payload)
+                taskProjectData: state.taskProjectData.filter(deleteTask => deleteTask._id !== action.payload)
                 //selectedProject: null
             }  
-        
+
+        case UPDATE_TASK:
+            return {
+                ...state,
+                taskProjectData: state.taskProjectData.map(newTask => newTask._id === action.payload._id ?
+                    action.payload
+                    : newTask
+                    ),
+                taskSelected: null
+            }
+        /*
         case COMPLETE_TASK:
             return {
                 ...state,
@@ -36,23 +47,12 @@ export default (state, action) => {
                     : newTask
                     )
             }
-
+        */
         case ONGOING_TASK:
             return {
                 ...state,
                 taskSelected: action.payload
             }
-
-        case UPDATE_TASK:
-            return {
-                ...state,
-                taskProjectData: state.taskProjectData.map(newTask => newTask.id === action.payload.id ?
-                    action.payload
-                    : newTask
-                    ),
-                taskSelected: null
-            }
-
 
         default: 
         return state;

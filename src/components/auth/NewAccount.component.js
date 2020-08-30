@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useContext, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
 import AlertContext from '../../context/alerts/alertContext';
@@ -16,6 +16,7 @@ const NewAccountComponent = props=> {
 
     const { register, handleSubmit, errors } = useForm();
 
+    /*
     const [createAccountForm, setCreateAccountFormState] = useState(
         {
            name:'',
@@ -24,6 +25,7 @@ const NewAccountComponent = props=> {
            confirm:''
         }
       );
+    */
 
     useEffect(() => {
         if (authenticate){
@@ -32,7 +34,7 @@ const NewAccountComponent = props=> {
         if (message){
             showAlert(message.msg, message.category);
         }
-        
+        // eslint-disable-next-line
     }, [message, authenticate, props.history]);
 
       /*

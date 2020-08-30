@@ -1,24 +1,30 @@
 import React, {useContext} from 'react';
 import {taskContext} from '../../context/task/taskContext';
-//import {ProjectContext} from '../../context/projects/projectContext';
+import ProjectContext from '../../context/projects/projectContext';
 
 const TaskComponent = props => {
 
-    //const projectsContext = useContext(ProjectContext);
+    const projectsContext = useContext(ProjectContext);
+    const {selectedProjectState} = projectsContext;
+
     const tasksContext = useContext(taskContext);
 
+    // Extracting the actual project
+    const [actualProject] = selectedProjectState;
+
     const onClickDelete = () => {
-        tasksContext.setDeleteTask(props.newTasksState._id);
+        tasksContext.setDeleteTask(props.newTasksState._id, actualProject._id);
         tasksContext.setNewTasksState(props.newTasksState.projectId);
     }
 
     const onClickComplete = () => {
-        if(props.newTasksState.completed){
-            props.newTasksState.completed = false;
+        if(props.newTasksState.state){
+            props.newTasksState.state = false;
         } else {
-            props.newTasksState.completed = true;
+            props.newTasksState.state = true;
         }
-        tasksContext.setCompleteTask(props.newTasksState);
+        //tasksContext.setCompleteTask(props.newTasksState); changed for setUpdateTask
+        tasksContext.setUpdateTask(props.newTasksState);
     }
 
     const onClickEdit = () => {
@@ -32,7 +38,7 @@ const TaskComponent = props => {
             <p>{props.newTasksState.name}</p>  
 
             <div className="status">
-                {props.newTasksState.completed ? 
+                {props.newTasksState.state ? 
                 
                 <button type="button"
                 className="complete"

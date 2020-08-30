@@ -28,7 +28,7 @@ const AuthState = props => {
     const signupUser = async signupFormData =>{
         try {
             const apiAnswerofForm = await clientAxios.post('/api/users', signupFormData);
-            console.log(apiAnswerofForm);
+            //console.log(apiAnswerofForm);
 
             dispatch({
                 type: SIGNUP_SUCCESSFULL,
