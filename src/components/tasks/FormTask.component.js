@@ -52,11 +52,12 @@ const FormTaskComponent = () => {
             // adding some fields to the newTasks state
             //newTask.completed = false;
             newTask.project = actualProject._id;
-
+            // This is a POST add for the first time
             tasksContext.setAddTaskToList(newTask);
-        } 
-        tasksContext.setUpdateTask(newTask);
-
+        } else {
+            // This is a PUT Update a task
+            tasksContext.setUpdateTask(newTask);
+        }
 
         // Sending the new task to the Listed Tasks
         tasksContext.setNewTasksState(actualProject._id);

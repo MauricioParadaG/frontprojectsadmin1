@@ -84,7 +84,9 @@ const TaskState = props => {
         // Insert to newTasks State
         dispatch({
             type: ADDNEWTASK_TOLIST,
+            //payload: newTask
             payload: apiAnswerofForm.data.task
+
         })
 
         } catch (error) {
